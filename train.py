@@ -4,7 +4,6 @@ from torch import nn, optim
 from torch.utils.data import DataLoader
 import torch.nn.functional as F
 import os
-from tqdm import tqdm 
 
 from model import Model
 from dataset import Dataset

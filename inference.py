@@ -3,7 +3,6 @@ import torch
 from model import Model
 from dataset import Dataset
 from util import load_model, get_args, get_device, set_env
-from tqdm import tqdm
 
 @torch.no_grad()
 def inference(args, dataloder, model, output_dir, DEVICE):

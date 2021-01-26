@@ -72,6 +72,7 @@ def train_model(args, data_loaders, data_lengths, DEVICE):
 def test_inference():
     data_dir = os.environ['SM_CHANNEL_EVAL']
     output_dir = os.environ['SM_OUTPUT_DATA_DIR']
+    data_path = os.path.join(data_dir, 'train_data.txt')
     dataset = Dataset(data_dir, max_len=args.sequence_length)
     tr_dl = torch.utils.data.DataLoader(dataset, 1)
     model = Model(args, dataset.nuniq_items, DEVICE)
@@ -89,7 +90,9 @@ if __name__ == '__main__':
     model_dir = os.environ['SM_MODEL_DIR']
     DEVICE = get_device()
 
-    dataset = Dataset(data_dir, max_len=args.sequence_length)
+    data_path = os.path.join(data_dir, 'train_data.txt')
+
+    dataset = Dataset(data_path, max_len=args.sequence_length)
     lengths = [int(len(dataset) * 0.8), len(dataset) - int(len(dataset) * 0.8)]
     tr_dt, vl_dt = torch.utils.data.dataset.random_split(dataset, lengths)
     tr_dl = torch.utils.data.DataLoader(tr_dt, args.batch_size)

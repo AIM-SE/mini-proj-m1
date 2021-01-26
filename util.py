@@ -1,10 +1,11 @@
 import torch
 import os
 import argparse
+import tarfile
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--max-epochs', type=int, default=10)
+    parser.add_argument('--max-epochs', type=int, default=1)
     
     parser.add_argument('--batch-size', type=int, default=32)
     parser.add_argument('--num-layers', type=int, default=3)
@@ -26,33 +27,33 @@ def get_device():
 def set_env(root_path='.'):
     # for train
     if not 'SM_CHANNEL_TRAIN' in os.environ :
-        os.environ['SM_CHANNEL_TRAIN'] = '%s/data/train_data.txt' % root_path
+        os.environ['SM_CHANNEL_TRAIN'] = '%s/data/' % root_path
     if not 'SM_MODEL_DIR' in os.environ:
-        os.environ['SM_MODEL_DIR'] = '%s/output/model.pth' % root_path
+        os.environ['SM_MODEL_DIR'] = '%s/output/' % root_path
 
     # for inference
     if not 'SM_CHANNEL_EVAL' in os.environ :
-        os.environ['SM_CHANNEL_EVAL'] = '%s/data/train_data.txt' % root_path
+        os.environ['SM_CHANNEL_EVAL'] = '%s/data/' % root_path
     if not 'SM_CHANNEL_MODEL' in os.environ :
-        os.environ['SM_CHANNEL_MODEL'] = '%s/output/model.pth' % root_path
+        os.environ['SM_CHANNEL_MODEL'] = '%s/output/' % root_path
     if not 'SM_OUTPUT_DATA_DIR' in os.environ :
-        os.environ['SM_OUTPUT_DATA_DIR'] = '%s/output/result.txt' % root_path
+        os.environ['SM_OUTPUT_DATA_DIR'] = '%s/output/' % root_path
 
     args = get_args()
 
     return args
 
 def save_model(model, model_dir):
-    #path = os.path.join(model_dir, 'model.pth')
-    #torch.save(model.state_dict(), path)
-    torch.save(model.state_dict(), model_dir)
+    path = os.path.join(model_dir, 'model.pth')
+    torch.save(model.state_dict(), path)
+    #torch.save(model.state_dict(), model_dir)
 
 def load_model(model, model_dir):
-    #tarpath = os.path.join(saved_model, 'model.tar.gz')
-    #tar = tarfile.open(tarpath, 'r:gz')
-    #tar.extractall(path=saved_model)
+    tarpath = os.path.join(model_dir, 'model.tar.gz')
+    tar = tarfile.open(tarpath, 'r:gz')
+    tar.extractall(path=model_dir)
 
-    #model_path = os.path.join(model_dir, 'model.pth')
-    model.load_state_dict(torch.load(model_dir))
+    model_path = os.path.join(model_dir, 'model.pth')
+    model.load_state_dict(torch.load(model_path))
 
     return model

@@ -38,7 +38,11 @@ if __name__ == '__main__':
     model_dir = os.environ['SM_CHANNEL_MODEL']
     output_dir = os.environ['SM_OUTPUT_DATA_DIR']
 
-    dataset = Dataset(data_dir, max_len=args.sequence_length)
+
+    data_path = os.path.join(data_dir, 'test_seq_data.txt')
+    output_path = os.path.join(output_dir, 'output.csv')
+
+    dataset = Dataset(data_path, max_len=args.sequence_length)
     model = Model(args, dataset.nuniq_items, DEVICE)
 
     tr_dl = torch.utils.data.DataLoader(dataset, 1)
@@ -46,5 +50,5 @@ if __name__ == '__main__':
     model = load_model(model, model_dir)
     model = model.to(DEVICE)
 
-    inference(args, tr_dl, model, output_dir, DEVICE)
+    inference(args, tr_dl, model, output_path, DEVICE)
     print('finish!')

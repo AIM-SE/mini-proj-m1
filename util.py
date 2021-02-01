@@ -50,10 +50,9 @@ def save_model(model, model_dir):
 
 def load_model(model, model_dir):
     tarpath = os.path.join(model_dir, 'model.tar.gz')
-    tar = tarfile.open(tarpath, 'r:gz')
-    tar.extractall(path=model_dir)
-
+    if os.path.exists(tarpath):
+        tar = tarfile.open(tarpath, 'r:gz')
+        tar.extractall(path=model_dir)
     model_path = os.path.join(model_dir, 'model.pth')
     model.load_state_dict(torch.load(model_path))
-
     return model

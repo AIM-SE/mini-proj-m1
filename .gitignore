@@ -134,3 +134,6 @@ code5.tar.gz
 data.m1-v1.2.tgz
 test_last_item_data.txt
 test_seq_data.txt
+data/.DS_Store
+*.swp
+data/.DS_Store

@@ -24,16 +24,16 @@ def get_device():
     DEVICE = torch.device("cuda" if USE_CUDA else "cpu")
     return DEVICE
 
-def set_env(root_path='.'):
+def set_env(root_path='.', kind='ml'):
     # for train
     if not 'SM_CHANNEL_TRAIN' in os.environ :
-        os.environ['SM_CHANNEL_TRAIN'] = '%s/data/' % root_path
+        os.environ['SM_CHANNEL_TRAIN'] = '%s/data-%s/' % (root_path, kind)
     if not 'SM_MODEL_DIR' in os.environ:
         os.environ['SM_MODEL_DIR'] = '%s/output/' % root_path
 
     # for inference
     if not 'SM_CHANNEL_EVAL' in os.environ :
-        os.environ['SM_CHANNEL_EVAL'] = '%s/data/' % root_path
+        os.environ['SM_CHANNEL_EVAL'] = '%s/data-%s/' % (root_path, kind)
     if not 'SM_CHANNEL_MODEL' in os.environ :
         os.environ['SM_CHANNEL_MODEL'] = '%s/output/' % root_path
     if not 'SM_OUTPUT_DATA_DIR' in os.environ :

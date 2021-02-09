@@ -1,0 +1,2 @@
+- user count : 5388 
+- item count : 3346 

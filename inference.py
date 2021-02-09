@@ -31,7 +31,7 @@ def inference(args, dataloder, model, output_dir, DEVICE):
     f.close()
 
 if __name__ == '__main__':
-    args = set_env()
+    args = set_env(kind='zf')   #kind=['ml' or 'zf']
     DEVICE = get_device()
 
     data_dir = os.environ['SM_CHANNEL_EVAL']
@@ -43,7 +43,9 @@ if __name__ == '__main__':
     output_path = os.path.join(output_dir, 'output.csv')
 
     dataset = Dataset(data_path, max_len=args.sequence_length)
-    model = Model(args, dataset.nuniq_items, DEVICE)
+    #max_item_count = 3706 #for data_ml
+    max_item_count = 65427 #for data_zf
+    model = Model(args, max_item_count, DEVICE)
 
     tr_dl = torch.utils.data.DataLoader(dataset, 1)
 

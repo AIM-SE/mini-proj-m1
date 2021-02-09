@@ -85,7 +85,7 @@ def test_inference():
     inference(args, tr_dl, model, output_dir, DEVICE)
 
 if __name__ == '__main__':
-    args = set_env()
+    args = set_env(kind='zf')   #kind=['ml' or 'zf']
     data_dir = os.environ['SM_CHANNEL_TRAIN']
     model_dir = os.environ['SM_MODEL_DIR']
     DEVICE = get_device()

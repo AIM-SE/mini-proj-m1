@@ -9,8 +9,6 @@ class Dataset(torch.utils.data.Dataset):
         self.file_name = file_name
         self.max_len = max_len+1 ## for GT in test set
         #self.max_len = max_len  ## for GT in test set
-        self.uniq_items = [i for i in range(3706)]
-        self.nuniq_items = len(self.uniq_items)
 
         self.dataset = self.load_dataset()
         self.dataset = self.dataset.reset_index()
@@ -19,6 +17,9 @@ class Dataset(torch.utils.data.Dataset):
         self.dataset = self.dataset
         self.dataset.set_index("idx", inplace=True)  ## to use index for comparing timestamp
         self.count = len(self.dataset)
+
+        self.uniq_items = [i for i in range(self.count)]
+        self.nuniq_items = len(self.uniq_items)
 
     def str_to_list(self, seq):
         return seq.split(',')

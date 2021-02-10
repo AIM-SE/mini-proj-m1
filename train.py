@@ -90,6 +90,9 @@ if __name__ == '__main__':
     model_dir = os.environ['SM_MODEL_DIR']
     DEVICE = get_device()
 
+    import os
+    if not os.path.exists('model'): os.makedirs('model')
+
     data_path = os.path.join(data_dir, 'train_data.txt')
 
     dataset = Dataset(data_path, max_len=args.sequence_length)

@@ -35,7 +35,9 @@ if __name__ == '__main__':
     DEVICE = get_device()
 
     data_dir = os.environ['SM_CHANNEL_EVAL']
-    model_dir = os.environ['SM_CHANNEL_MODEL']
+    #model_dir = os.environ['SM_CHANNEL_MODEL']
+    ##in case only inference
+    model_dir = './model/' 
     output_dir = os.environ['SM_OUTPUT_DATA_DIR']
 
 

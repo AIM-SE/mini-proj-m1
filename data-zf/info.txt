@@ -1,2 +1,2 @@
-- user count : 21077
-- item count : 65427 
+- user count : 65,427
+- item count : 21,077
